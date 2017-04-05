@@ -2,32 +2,44 @@
 def print_array(arr)
   puts "\n***"
   @arr.each_with_index {|val, index| puts "#{index +1}. #{val} "}
-  puts "***\n\n> "
+  print "***\n\n"
 end
 
-def add(input)
-  input.sub! 'add', ''
-  @arr << input
+def add(item)
+  @arr << item
   #Time.now.utc
   print_array(@arr)
 end
 
-def remove(input)
-  input = []
-  input.sub! 'remove ', ''
-  @arr.delete_at(input.to_i - 1)
-  print_array(arr)
+def remove(item)
+  @arr.delete_at(item.to_i - 1)
+  print_array(@arr)
 end
 
-input = ''
-print '> '
+def edit(item)
+  #edit item
+end
 
-while input = gets.strip.downcase do
-    if input.include? 'add'
-    add(input)
-    elsif input.include? 'remove'
-    remove(input)
-    else puts 'ERROR Unknown command, try again.\n'
-    print '> '
-  end
-end 
+def prompt()
+  print '> '
+end
+
+task = ''
+prompt
+
+while item = gets.strip.downcase do
+    if item.include? 'add'
+    item.sub! 'add', ''
+      add(item)
+      prompt
+    elsif item.include? 'remove'
+    item.sub! 'remove ', ''
+      remove(item)
+      prompt
+    elsif item.include? 'edit'
+    #edit
+      edit(item)
+    else puts 'ERROR Unknown command, try again.'
+    prompt
+end
+end
