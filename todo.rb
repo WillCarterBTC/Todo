@@ -1,4 +1,5 @@
 @arr = []
+
 def print_array(arr)
   puts "\n***"
   @arr.each_with_index {|val, index| puts "#{index +1}. #{val} "}
@@ -17,7 +18,10 @@ def remove(item)
 end
 
 def edit(item)
-  #edit item
+  puts 'What shall the new task be?'
+  new_item = gets.strip
+  @arr[@arr.index(item)] = new_item
+  print_array(@arr)
 end
 
 def prompt()
@@ -37,8 +41,9 @@ while item = gets.strip.downcase do
       remove(item)
       prompt
     elsif item.include? 'edit'
-    #edit
+    item.sub! 'edit', ''
       edit(item)
+    prompt
     else puts 'ERROR Unknown command, try again.'
     prompt
 end
