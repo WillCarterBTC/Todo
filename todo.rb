@@ -1,6 +1,6 @@
 @arr = []
 
-def print_array(arr)
+def print_array(arbitrary)
   puts "\n***"
   @arr.each_with_index {|todo, index| puts "#{index +1}. #{todo} "}
   print "***\n\n"
@@ -18,7 +18,7 @@ end
 def edit(item)
   puts 'What shall the new task be?'
   new_item = gets.strip
-  @arr[@arr.index(item)] = new_item
+  @arr[@arr.index(item)] = " " + new_item
 end
 
 def prompt()
