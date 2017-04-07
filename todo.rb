@@ -2,7 +2,7 @@
 
 def print_array(arr)
   puts "\n***"
-  @arr.each_with_index {|val, index| puts "#{index +1}. #{val} "}
+  @arr.each_with_index {|todo, index| puts "#{index +1}. #{todo} "}
   print "***\n\n"
 end
 
