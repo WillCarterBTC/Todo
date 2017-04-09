@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 @arr = []
 
 def print_array(arbitrary)
@@ -22,7 +24,7 @@ def edit(item)
 end
 
 def prompt()
-  print '> '
+  print 'todo> '
 end
 
 task = ''
