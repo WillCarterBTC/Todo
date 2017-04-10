@@ -27,7 +27,7 @@ def prompt()
   print 'todo> '
 end
 
-task = ''
+#task = ''
 prompt
 
 while item = gets.strip.downcase do
