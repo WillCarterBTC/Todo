@@ -1,47 +1,66 @@
 #!/usr/bin/env ruby
 
-@arr = []
+@list_arr = [["-", "perform animal movement exercises"], ["+", "write good code"]]
 
 def print_array(arbitrary)
   puts "\n***"
-  @arr.each_with_index {|todo, index| puts "#{index +1}. #{todo} "}
+  @list_arr.map.each_with_index{|x,i| puts "#{i+1}. #{x.join(" ")}"}
   print "***\n\n"
 end
 
-def add(item)
-  @arr << item
-  #Time.now.utc
+def add(response)
+  @list_arr << ["-", response]
 end
 
-def remove(item)
-  @arr.delete_at(item.to_i - 1)
+def remove(response)
+  index_to_delete = @list_arr.find_index(response)
+  @list_arr.delete_at(response.to_i-1)
+  #We need to implement deleting based on text value of the todo item task
+  #@list_arr.delete_at(index_to_delete.to_i-1)
 end
 
-def edit(item)
-  puts 'What shall the new task be?'
-  new_item = gets.strip
-  @arr[@arr.index(item)] = " " + new_item
+
+def done(response)
+  todo_item_number = @list_arr[response.to_i-1]
+  todo_item_number[0] = "+"
+end
+
+def undone(response)
+  todo_item_number = @list_arr[response.to_i-1]
+  todo_item_number[0] = "-"
 end
 
 def prompt()
   print 'todo> '
 end
 
-#task = ''
 prompt
 
-while item = gets.strip.downcase do
-    if item.include? 'add'
-    item.sub! 'add', ''
-      add(item)
-    elsif item.include? 'remove'
-    item.sub! 'remove ', ''
-      remove(item)
-    elsif item.include? 'edit'
-    item.sub! 'edit', ''
-      edit(item)
+while input = gets.strip.downcase do
+  command = input.split(' ').delete_at(0)
+  response = input.split(' ')[1..-1].join(' ')
+
+    if command == 'add'
+      add(response)
+    elsif command == 'remove'
+      remove(response)
+    elsif command == 'done'
+      done(response)
+    elsif command == 'undone'
+      undone(response)
+    
+    
+    elsif command == 'edit'
+      edit(arr) 
+    elsif command == 'list'
+     #print_array(@list_arr)
+    elsif command == 'exit'
+      puts 'press control and c to exit now'
+
+    
     else puts 'ERROR Unknown command, try again.'
-  end  
-  print_array(@arr)
+  end
+
+  print_array(@list_arr)
   prompt
 end
