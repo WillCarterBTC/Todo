@@ -2,7 +2,7 @@
 
 @list_arr = [["-", "perform animal movement exercises"], ["+", "write good code"]]
 
-def print_array(arbitrary)
+def print_array(arbitrary)#Why is arbitrary text required as an arguement to this method?
   puts "\n***"
   @list_arr.map.each_with_index{|x,i| puts "#{i+1}. #{x.join(" ")}"}
   print "***\n\n"
@@ -13,7 +13,7 @@ def add(response)
 end
 
 def remove(response)
-  index_to_delete = @list_arr.find_index(response)
+  #index_to_delete = @list_arr.find_index(response)
   @list_arr.delete_at(response.to_i-1)
   #We need to implement deleting based on text value of the todo item task
   #@list_arr.delete_at(index_to_delete.to_i-1)
@@ -30,6 +30,7 @@ def undone(response)
 end
 
 def up(response)
+  #Could variables be used here(and in the next method)? Am I repeating myself?
   @list_arr[response.to_i-2], @list_arr[response.to_i-1] = @list_arr[response.to_i-1], @list_arr[response.to_i-2]
 end
 
@@ -62,7 +63,7 @@ while input = gets.strip.downcase do
     elsif command == 'edit'
       edit(arr) 
     elsif command == 'exit'
-      puts 'press control and c to exit now'
+      exit
     elsif command == 'list'
     else puts 'ERROR Unknown command, try again.'
   end
