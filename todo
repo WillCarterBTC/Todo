@@ -19,7 +19,6 @@ def remove(response)
   #@list_arr.delete_at(index_to_delete.to_i-1)
 end
 
-
 def done(response)
   todo_item_number = @list_arr[response.to_i-1]
   todo_item_number[0] = "+"
@@ -30,6 +29,14 @@ def undone(response)
   todo_item_number[0] = "-"
 end
 
+def up(response)
+  @list_arr[response.to_i-2], @list_arr[response.to_i-1] = @list_arr[response.to_i-1], @list_arr[response.to_i-2]
+end
+
+def down(response)
+    @list_arr[response.to_i-1], @list_arr[response.to_i] = @list_arr[response.to_i], @list_arr[response.to_i-1]
+end
+    
 def prompt()
   print 'todo> '
 end
@@ -48,16 +55,15 @@ while input = gets.strip.downcase do
       done(response)
     elsif command == 'undone'
       undone(response)
-    
-    
+    elsif command == 'up'
+      up(response)
+    elsif command == 'down'
+      down(response)
     elsif command == 'edit'
       edit(arr) 
-    elsif command == 'list'
-     #print_array(@list_arr)
     elsif command == 'exit'
       puts 'press control and c to exit now'
-
-    
+    elsif command == 'list'
     else puts 'ERROR Unknown command, try again.'
   end
 
