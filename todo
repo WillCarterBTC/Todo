@@ -2,21 +2,34 @@
 
 @list_arr = [["-", "perform animal movement exercises"], ["+", "write good code"]]
 
-def print_array(arbitrary)#Why is arbitrary text required as an arguement to this method?
+def print_array(arbitrary)
   puts "\n***"
   @list_arr.map.each_with_index{|x,i| puts "#{i+1}. #{x.join(" ")}"}
   print "***\n\n"
 end
 
+def quotes(response)
+  if response.match(/\s/)
+    unless response[0] && response[-1] == '"'
+    puts 'ERROR, please wrap words in quotes'
+    end
+  end
+  response.gsub!(/\A"|"\Z/, '')
+end
+
 def add(response)
+ #if response.match(/\s/)
+   #unless response[0] && response[-1] == '"'
+   #puts 'ERROR, please wrap words in quotes'
+   #exit
+   #end
+     #response.gsub!(/\A"|"\Z/, '')
+ #end
   @list_arr << ["-", response]
 end
 
 def remove(response)
-  #index_to_delete = @list_arr.find_index(response)
   @list_arr.delete_at(response.to_i-1)
-  #We need to implement deleting based on text value of the todo item task
-  #@list_arr.delete_at(index_to_delete.to_i-1)
 end
 
 def done(response)
@@ -30,14 +43,13 @@ def undone(response)
 end
 
 def up(response)
-  #Could variables be used here(and in the next method)? Am I repeating myself?
   @list_arr[response.to_i-2], @list_arr[response.to_i-1] = @list_arr[response.to_i-1], @list_arr[response.to_i-2]
 end
 
 def down(response)
     @list_arr[response.to_i-1], @list_arr[response.to_i] = @list_arr[response.to_i], @list_arr[response.to_i-1]
 end
-    
+
 def prompt()
   print 'todo> '
 end
@@ -48,26 +60,29 @@ while input = gets.strip.downcase do
   command = input.split(' ').delete_at(0)
   response = input.split(' ')[1..-1].join(' ')
 
-    if command == 'add'
-      add(response)
-    elsif command == 'remove'
-      remove(response)
-    elsif command == 'done'
-      done(response)
-    elsif command == 'undone'
-      undone(response)
-    elsif command == 'up'
-      up(response)
-    elsif command == 'down'
-      down(response)
-    elsif command == 'edit'
-      edit(arr) 
-    elsif command == 'exit'
-      exit
-    elsif command == 'list'
-    else puts 'ERROR Unknown command, try again.'
+  if response.match(/\s/) && response[0] && response[-1] == '"'
+  else !response.strip.include? " "
+      if command == 'add'
+        add(response)
+      elsif command == 'remove'
+        remove(response)
+      elsif command == 'done'
+        done(response)
+      elsif command == 'undone'
+        undone(response)
+      elsif command == 'up'
+        up(response)
+      elsif command == 'down'
+        down(response)
+      elsif command == 'edit'
+        edit(arr) 
+      elsif command == 'exit'
+        exit
+      elsif command == 'list'
+      else puts 'ERROR Unknown command, try again.'
+    end
   end
-
+  
   print_array(@list_arr)
   prompt
 end
