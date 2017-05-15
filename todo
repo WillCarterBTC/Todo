@@ -1,53 +1,37 @@
 #!/usr/bin/env ruby
 
-@list_arr = [["-", "perform animal movement exercises"], ["+", "write good code"]]
+@todo_list = [["-", "perform animal movement exercises"], ["+", "write good code"]]
 
-def print_array(arbitrary)
+def print_todo_list(arbitrary)
   puts "\n***"
-  @list_arr.map.each_with_index{|x,i| puts "#{i+1}. #{x.join(" ")}"}
+  @todo_list.map.each_with_index{|task,i| puts "#{i+1}. #{task.join(" ")}"}
   print "***\n\n"
 end
 
-def quotes(response)
-  if response.match(/\s/)
-    unless response[0] && response[-1] == '"'
-    puts 'ERROR, please wrap words in quotes'
-    end
-  end
-  response.gsub!(/\A"|"\Z/, '')
-end
-
 def add(response)
- #if response.match(/\s/)
-   #unless response[0] && response[-1] == '"'
-   #puts 'ERROR, please wrap words in quotes'
-   #exit
-   #end
-     #response.gsub!(/\A"|"\Z/, '')
- #end
-  @list_arr << ["-", response]
+  @todo_list << ["-", response]
 end
 
 def remove(response)
-  @list_arr.delete_at(response.to_i-1)
+  @todo_list.delete_at(response.to_i-1)
 end
 
 def done(response)
-  todo_item_number = @list_arr[response.to_i-1]
+  todo_item_number = @todo_list[response.to_i-1]
   todo_item_number[0] = "+"
 end
 
 def undone(response)
-  todo_item_number = @list_arr[response.to_i-1]
+  todo_item_number = @todo_list[response.to_i-1]
   todo_item_number[0] = "-"
 end
 
 def up(response)
-  @list_arr[response.to_i-2], @list_arr[response.to_i-1] = @list_arr[response.to_i-1], @list_arr[response.to_i-2]
+  @todo_list[response.to_i-2], @todo_list[response.to_i-1] = @todo_list[response.to_i-1], @todo_list[response.to_i-2]
 end
 
 def down(response)
-    @list_arr[response.to_i-1], @list_arr[response.to_i] = @list_arr[response.to_i], @list_arr[response.to_i-1]
+    @todo_list[response.to_i-1], @todo_list[response.to_i] = @todo_list[response.to_i], @todo_list[response.to_i-1]
 end
 
 def prompt()
@@ -60,8 +44,6 @@ while input = gets.strip.downcase do
   command = input.split(' ').delete_at(0)
   response = input.split(' ')[1..-1].join(' ')
 
-  if response.match(/\s/) && response[0] && response[-1] == '"'
-  else !response.strip.include? " "
       if command == 'add'
         add(response)
       elsif command == 'remove'
@@ -77,12 +59,14 @@ while input = gets.strip.downcase do
       elsif command == 'edit'
         edit(arr) 
       elsif command == 'exit'
-        exit
+        File.open("todo.txt", "w+") do |f|
+          @todo_list.each { |element| f.puts(element.join(" ")) }
+        end
+          exit
       elsif command == 'list'
       else puts 'ERROR Unknown command, try again.'
-    end
-  end
+      end
   
-  print_array(@list_arr)
+  print_todo_list(@todo_list)
   prompt
 end
