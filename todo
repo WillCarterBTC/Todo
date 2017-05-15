@@ -1,6 +1,12 @@
 #!/usr/bin/env ruby
 
-@todo_list = [["-", "perform animal movement exercises"], ["+", "write good code"]]
+@todo_list = []
+
+File.open('todo.txt') do |f|
+  f.each_line do |line|
+    @todo_list << line.split
+  end
+end
 
 def print_todo_list(arbitrary)
   puts "\n***"
