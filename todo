@@ -47,29 +47,28 @@ end
 prompt
 
 while input = gets.strip.downcase do
-  command = input.split(' ').delete_at(0)
   response = input.split(' ')[1..-1].join(' ')
 
-      if command == 'add'
+  if input.start_with? 'add'
         add(response)
-      elsif command == 'remove'
+  elsif input.start_with? 'remove'
         remove(response)
-      elsif command == 'done'
+  elsif input.start_with? 'done'
         done(response)
-      elsif command == 'undone'
+  elsif input.start_with? 'undone'
         undone(response)
-      elsif command == 'up'
+  elsif input.start_with? 'up'
         up(response)
-      elsif command == 'down'
+  elsif input.start_with? 'down'
         down(response)
-      elsif command == 'edit'
+  elsif input.start_with? 'edit'
         edit(arr) 
-      elsif command == 'exit'
+  elsif input == 'exit'
         File.open("todo.txt", "w+") do |f|
           @todo_list.each { |element| f.puts(element.join(" ")) }
         end
           exit
-      elsif command == 'list'
+  elsif input == 'list'
       else puts 'ERROR Unknown command, try again.'
       end
   
